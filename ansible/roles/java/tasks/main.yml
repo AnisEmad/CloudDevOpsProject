@@ -1,0 +1,6 @@
+---
+- name: Install Amazon Corretto 17 (JDK required by Jenkins)
+  ansible.builtin.dnf:
+    name: java-17-amazon-corretto
+    state: present
+    update_cache: yes

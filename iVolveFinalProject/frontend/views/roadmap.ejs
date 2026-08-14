@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>iVolve DevOps Training Program</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav>
+
+    <div class="nav-brand">
+
+      <div class="nav-logos">
+
+        <img
+          src="/images/ivolve-logo.png"
+          alt="iVolve Technologies"
+          class="nav-ivolve-logo"
+        >
+
+        <div class="nav-divider"></div>
+
+        <img
+          src="/images/nti-logo.png"
+          alt="NTI"
+          class="nav-nti-logo"
+        >
+
+      </div>
+
+      <div class="nav-title">
+        iVolve DevOps Training Program with NTI
+      </div>
+
+    </div>
+
+    <form method="POST" action="/logout">
+      <button class="small-button" type="submit">
+        Logout
+      </button>
+    </form>
+
+  </nav>
+
+
+  <!-- Main Content -->
+  <main class="container">
+
+    <section class="hero">
+
+      <h1>
+        Welcome, <span class="welcome"><%= user.username %></span> 👋
+      </h1>
+
+      <p class="muted">
+        DevOps Topics covered in the training
+      </p>
+
+    </section>
+
+
+    <div class="grid">
+
+      <% roadmap.forEach((item, index) => { %>
+
+        <div class="roadmap-card">
+
+          <span class="number">
+            <%= index + 1 %>
+          </span>
+
+          <h2>
+            <%= item.title %>
+          </h2>
+
+          <p>
+            <%= item.description %>
+          </p>
+
+        </div>
+
+      <% }) %>
+
+    </div>
+
+  </main>
+
+</body>
+</html>

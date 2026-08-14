@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    <%= mode === "login" ? "Login" : "Sign Up" %> - iVolve DevOps Training
+  </title>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <div class="auth-page">
+
+    <div class="auth-card">
+
+      <!-- Logos -->
+      <div class="logo-container">
+
+        <img
+          src="/images/ivolve-logo.png"
+          alt="iVolve Technologies"
+          class="ivolve-logo"
+        >
+
+        <div class="logo-divider"></div>
+
+        <img
+          src="/images/nti-logo.png"
+          alt="NTI"
+          class="nti-logo"
+        >
+
+      </div>
+
+      <!-- Title -->
+      <div class="training-label">
+        iVolve Technologies × NTI
+      </div>
+
+      <h1 class="auth-title">
+        DevOps Training Program
+      </h1>
+
+      <p class="auth-subtitle">
+        <%= mode === "login"
+          ? "Sign in to access your DevOps training program"
+          : "Create your account to access the DevOps training program"
+        %>
+      </p>
+
+      <% if (error) { %>
+        <div class="error">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <!-- Login / Signup Form -->
+      <form
+        method="POST"
+        action="<%= mode === "login" ? "/login" : "/signup" %>"
+      >
+
+        <label for="username">
+          Username
+        </label>
+
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          required
+          minlength="3"
+        >
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+          minlength="8"
+        >
+
+        <button type="submit">
+          <%= mode === "login" ? "Login" : "Create Account" %>
+        </button>
+
+      </form>
+
+      <% if (mode === "login") { %>
+
+        <p class="auth-footer">
+          Don't have an account?
+          <a href="/signup">Sign up</a>
+        </p>
+
+      <% } else { %>
+
+        <p class="auth-footer">
+          Already have an account?
+          <a href="/">Login</a>
+        </p>
+
+      <% } %>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

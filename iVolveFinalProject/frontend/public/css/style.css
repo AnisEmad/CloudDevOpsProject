@@ -1,0 +1,395 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0b1120;
+  --bg-secondary: #111827;
+  --card: #151e2e;
+  --card-hover: #1b2638;
+  --border: #263449;
+  --text: #f3f4f6;
+  --muted: #9ca3af;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --danger-bg: #3b1717;
+  --danger-text: #fca5a5;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 35%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* =========================
+   Authentication
+   ========================= */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+}
+
+.auth-card {
+  width: 460px;
+  max-width: 100%;
+  background: rgba(21, 30, 46, 0.96);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 40px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 30px;
+}
+
+.logo-container img {
+  object-fit: contain;
+}
+
+.ivolve-logo {
+  width: 150px;
+  max-height: 85px;
+}
+
+.nti-logo {
+  width: 145px;
+  max-height: 80px;
+}
+
+.logo-divider {
+  width: 1px;
+  height: 60px;
+  background: var(--border);
+}
+
+.auth-title {
+  text-align: center;
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.3;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin: 12px 0 30px;
+  line-height: 1.5;
+}
+
+.training-label {
+  text-align: center;
+  color: #60a5fa;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 7px;
+  font-weight: 600;
+  color: #d1d5db;
+}
+
+input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #0f172a;
+  color: var(--text);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+button {
+  width: 100%;
+  margin-top: 24px;
+  padding: 13px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  background: var(--primary);
+  color: white;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background: var(--primary-hover);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.auth-footer {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 24px;
+}
+
+a {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  margin: 18px 0;
+  padding: 13px 15px;
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1px solid #6b2424;
+  border-radius: 8px;
+}
+
+/* =========================
+   Main Navigation
+   ========================= */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 5%;
+  background: rgba(15, 23, 42, 0.96);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-logos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logos img {
+  object-fit: contain;
+}
+
+.nav-ivolve-logo {
+  width: 90px;
+  height: 48px;
+}
+
+.nav-nti-logo {
+  width: 80px;
+  height: 45px;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 35px;
+  background: var(--border);
+}
+
+.nav-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+nav form {
+  margin: 0;
+}
+
+.small-button {
+  width: auto;
+  margin: 0;
+  padding: 9px 18px;
+  background: #1f2937;
+  border: 1px solid var(--border);
+}
+
+.small-button:hover {
+  background: #374151;
+}
+
+/* =========================
+   Roadmap
+   ========================= */
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 55px auto;
+}
+
+.hero {
+  margin-bottom: 35px;
+}
+
+.hero h1 {
+  margin: 0 0 12px;
+  font-size: 38px;
+  line-height: 1.2;
+}
+
+.hero .welcome {
+  color: #60a5fa;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.hero p {
+  font-size: 17px;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.roadmap-card {
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    rgba(21, 30, 46, 0.98),
+    rgba(15, 23, 42, 0.98)
+  );
+  border: 1px solid var(--border);
+  padding: 27px;
+  min-height: 210px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.roadmap-card:hover {
+  transform: translateY(-5px);
+  border-color: #3b82f6;
+  background: var(--card-hover);
+}
+
+.number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.roadmap-card h2 {
+  margin: 0 0 14px;
+  font-size: 23px;
+}
+
+.roadmap-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* =========================
+   Error Page
+   ========================= */
+
+.card {
+  width: 460px;
+  max-width: 92%;
+  margin: 100px auto;
+  padding: 35px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+}
+
+.card h1 {
+  margin-top: 0;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    width: 92%;
+    margin: 35px auto;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+  }
+
+  .auth-card {
+    padding: 28px 22px;
+  }
+
+  .logo-container {
+    gap: 18px;
+  }
+
+  .ivolve-logo {
+    width: 120px;
+  }
+
+  .nti-logo {
+    width: 115px;
+  }
+
+  .nav-title {
+    display: none;
+  }
+
+  .nav-ivolve-logo {
+    width: 75px;
+  }
+
+  .nav-nti-logo {
+    width: 70px;
+  }
+}

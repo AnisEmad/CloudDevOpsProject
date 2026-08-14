@@ -1,0 +1,2 @@
+infrastructure_terraform/.terraform
+ansible/*.deb
