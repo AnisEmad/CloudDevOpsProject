@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: roadmap-service
+  namespace: ivolve
+spec:
+  selector:
+    app: roadmap-service
+  ports:
+    - port: 8080
+      targetPort: 8080

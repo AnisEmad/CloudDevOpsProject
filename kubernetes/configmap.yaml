@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ivolve-config
+  namespace: ivolve
+data:
+  DB_HOST: "mysql-headless"
+  DB_PORT: "3306"
+  DB_NAME: "ivolve"
+  # Internal K8s DNS names for microservices to communicate
+  AUTH_SERVICE_URL: "http://auth-service:5000"
+  ROADMAP_SERVICE_URL: "http://roadmap-service:8080"

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: ivolve
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - name: auth-service
+        image: 571973773340.dkr.ecr.us-east-1.amazonaws.com/ivolve-auth
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: ivolve-config
+        - secretRef:
+            name: ivolve-secret

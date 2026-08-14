@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: ivolve
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: 571973773340.dkr.ecr.us-east-1.amazonaws.com/ivolve-frontend
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: ivolve-config
