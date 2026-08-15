@@ -1,0 +1,120 @@
+@Library('ivolve-shared') _
+
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        OPS_REPO = 'https://github.com/AnisEmad/CloudDevOpsProject.git'
+
+        AWS_REGION = 'us-east-1'
+        AWS_DEFAULT_REGION = 'us-east-1'
+
+        SERVICE_NAME = 'frontend'
+        APP_CONTEXT = 'iVolveFinalProject/frontend'
+        ECR_REPO = 'ivolve-frontend'
+
+        MANIFEST_FILE = 'kubernetes/microservices/frontend-deployment.yaml'
+
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Prepare environment') {
+            steps {
+                script {
+                    env.AWS_ACCOUNT_ID = sh(
+                        script: "aws sts get-caller-identity --query Account --output text",
+                        returnStdout: true
+                    ).trim()
+
+                    env.ECR_REGISTRY = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+                    env.IMAGE_URI = "${env.ECR_REGISTRY}/${env.ECR_REPO}:${env.IMAGE_TAG}"
+                    env.LOCAL_IMAGE = "${env.SERVICE_NAME}:${env.IMAGE_TAG}"
+
+                    echo "AWS Account ID: ${env.AWS_ACCOUNT_ID}"
+                    echo "ECR Registry: ${env.ECR_REGISTRY}"
+                    echo "Image URI: ${env.IMAGE_URI}"
+                }
+            }
+        }
+
+        stage('Validate repository layout') {
+            steps {
+                sh 'ls -la'
+                sh 'ls -la iVolveFinalProject || true'
+                sh "test -d ${env.APP_CONTEXT}"
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                buildImage(
+                    context: env.APP_CONTEXT,
+                    localImage: env.LOCAL_IMAGE
+                )
+            }
+        }
+
+        stage('Scan Image') {
+            steps {
+                scanImage(
+                    image: env.LOCAL_IMAGE,
+                    failOnCritical: false
+                )
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                pushImage(
+                    localImage: env.LOCAL_IMAGE,
+                    imageUri: env.IMAGE_URI,
+                    registry: env.ECR_REGISTRY,
+                    region: env.AWS_REGION
+                )
+            }
+        }
+
+        stage('Delete Image Locally') {
+            steps {
+                deleteLocalImage(
+                    images: [
+                        env.LOCAL_IMAGE,
+                        env.IMAGE_URI
+                    ]
+                )
+            }
+        }
+
+        stage('Update Manifests') {
+            steps {
+                updateManifests(
+                    manifestFile: env.MANIFEST_FILE,
+                    imageUri: env.IMAGE_URI
+                )
+            }
+        }
+
+        stage('Push Manifests') {
+            steps {
+                pushManifests(
+                    repoUrl: env.OPS_REPO,
+                    branch: 'main',
+                    commitMessage: "[skip ci] Deploy ${env.SERVICE_NAME} build ${env.IMAGE_TAG}",
+                    credentialsId: 'github-pat',
+                    paths: 'kubernetes/'
+                )
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Jenkins pipeline finished for ${env.SERVICE_NAME}"
+        }
+    }
+}
