@@ -32,6 +32,10 @@ resource "aws_iam_role_policy_attachment" "ssm_policy" {
   role       = aws_iam_role.jenkins_ssm_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
+resource "aws_iam_role_policy_attachment" "jenkins_ecr_power_user" {
+  role       = aws_iam_role.jenkins_ssm_role.name 
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
+}
 
 resource "aws_iam_instance_profile" "jenkins_profile" {
   name = "${var.project_name}-jenkins-profile"
