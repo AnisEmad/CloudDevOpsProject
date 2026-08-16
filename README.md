@@ -29,7 +29,7 @@ is stored in this repository under `iVolveFinalProject/` (monorepo layout).
 
 ## 2. Architecture Overview
 
-```text
+<!-- ```text
                            ┌────────────────────────┐
                            │      Users/Browser     │
                            └───────────┬────────────┘
@@ -48,7 +48,8 @@ is stored in this repository under `iVolveFinalProject/` (monorepo layout).
    CI/CD PLANE (GitOps):
    Developer ─▶ GitHub ─▶ Jenkins: Build → Trivy Scan → Push ECR →
    Update Manifests → Push Manifests ─▶ ArgoCD watches Git ─▶ syncs EKS
-```
+``` -->
+![Architecture Diagram](screenshots/arch.png)
 
 ### Toolchain & Rationale
 
