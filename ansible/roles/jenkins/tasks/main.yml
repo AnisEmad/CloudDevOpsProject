@@ -1,4 +1,12 @@
 ---
+- name: Install Git
+  ansible.builtin.package:
+    name:
+      - git
+    state: present
+    update_cache: yes
+  become: yes
+
 - name: Add Jenkins repo file
   ansible.builtin.get_url:
     url: https://pkg.jenkins.io/redhat-stable/jenkins.repo

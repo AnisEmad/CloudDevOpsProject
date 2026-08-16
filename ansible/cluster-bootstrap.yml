@@ -12,18 +12,35 @@
         cmd: aws eks update-kubeconfig --name {{ cluster_name }} --region {{ aws_region }}
       changed_when: false
 
+    - name: Add NGINX Ingress Helm repository
+      ansible.builtin.command:
+        cmd: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+      failed_when: false 
+      changed_when: false
+    
+    - name: Add ArgoCD Helm repository
+      ansible.builtin.command:
+        cmd: helm repo add argo https://argoproj.github.io/argo-helm
+      failed_when: false
+      changed_when: false
+
+    - name: Update Helm repositories
+      ansible.builtin.command:
+        cmd: helm repo update
+      changed_when: false
+
     - name: Install NGINX Ingress Controller (Helm)
       ansible.builtin.command:
         cmd: >
           helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx
-          --repo https://kubernetes.github.io/ingress-nginx
           --namespace ingress-nginx --create-namespace --wait --timeout 5m
       changed_when: false
 
-    - name: Install ArgoCD
-      ansible.builtin.shell: |
-        kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
-        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    - name: Install ArgoCD (Helm)
+      ansible.builtin.command:
+        cmd: >
+          helm upgrade --install argocd argo/argo-cd
+          --namespace argocd --create-namespace --wait --timeout 5m
       changed_when: false
 
     - name: Expose ArgoCD UI via LoadBalancer
