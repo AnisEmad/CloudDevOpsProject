@@ -122,33 +122,33 @@ is stored in this repository under `iVolveFinalProject/` (monorepo layout).
 
 ## 5. Setup Instructions
 
-### 5.1 — Test the application locally (Step 2)
+### 5.1 — Test the application locally 
 ```bash
 docker compose up --build     # → http://localhost:3000
 docker compose down
 ```
 
-### 5.2 — Provision infrastructure (Step 3)
+### 5.2 — Provision infrastructure
 ```bash
 cd infrastructure_terraform
 terraform init
 terraform apply -auto-approve     # VPC, Jenkins EC2, EKS (2 AZs), ECR
 ```
 
-### 5.3 — Configure the Jenkins server (Step 4)
+### 5.3 — Configure the Jenkins server
 ```bash
 cd ../ansible
 ansible-playbook -i inventory/aws_ec2.yml playbook.yml
 ```
 
-### 5.4 — Bootstrap cluster add-ons & GitOps (Steps 5 & 7)
+### 5.4 — Bootstrap cluster add-ons & GitOps 
 ```bash
 ansible-playbook cluster-bootstrap.yml
 # installs NGINX Ingress + ArgoCD, then applies argocd/application.yaml.
 # ArgoCD then deploys EVERYTHING in kubernetes/ automatically.
 ```
 
-### 5.5 — One-time Jenkins UI configuration (Step 6)
+### 5.5 — One-time Jenkins UI configuration 
 1. **Credential** `github-pat` (Kind: Username with password; your GitHub username + PAT).
 2. **Global Pipeline Library**: Name `ivolve-shared`, Default version `main`,
    Repository = this repo, **Script Path `jenkins/shared-library`**.
