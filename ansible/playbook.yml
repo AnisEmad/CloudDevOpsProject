@@ -4,6 +4,6 @@
   become: yes
   roles:
     - java
-    - jenkins
     - docker
+    - jenkins
     - trivy
