@@ -1,0 +1,37 @@
+---
+- name: Bootstrap EKS add-ons (NGINX Ingress + ArgoCD + GitOps app)
+  hosts: localhost
+  connection: local
+  vars:
+    aws_region: us-east-1
+    cluster_name: ivolve-eks-cluster
+    repo_root: "{{ playbook_dir }}/.."
+  tasks:
+    - name: Update kubeconfig for EKS
+      ansible.builtin.command:
+        cmd: aws eks update-kubeconfig --name {{ cluster_name }} --region {{ aws_region }}
+      changed_when: false
+
+    - name: Install NGINX Ingress Controller (Helm)
+      ansible.builtin.command:
+        cmd: >
+          helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx
+          --repo https://kubernetes.github.io/ingress-nginx
+          --namespace ingress-nginx --create-namespace --wait --timeout 5m
+      changed_when: false
+
+    - name: Install ArgoCD
+      ansible.builtin.shell: |
+        kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+      changed_when: false
+
+    - name: Expose ArgoCD UI via LoadBalancer
+      ansible.builtin.command:
+        cmd: kubectl patch svc argocd-server -n argocd -p '{"spec":{"type":"LoadBalancer"}}'
+      changed_when: false
+
+    - name: Deploy the GitOps application (ArgoCD syncs everything else)
+      ansible.builtin.command:
+        cmd: kubectl apply -f {{ repo_root }}/argocd/application.yaml
+      changed_when: false

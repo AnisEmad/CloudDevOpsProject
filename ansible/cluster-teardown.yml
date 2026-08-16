@@ -1,0 +1,32 @@
+---
+- name: Release add-on Load Balancers before terraform destroy
+  hosts: localhost
+  connection: local
+  vars:
+    repo_root: "{{ playbook_dir }}/.."
+  tasks:
+    - name: Delete ArgoCD application (stop GitOps sync)
+      ansible.builtin.command:
+        cmd: kubectl delete -f {{ repo_root }}/argocd/application.yaml --wait=false
+      failed_when: false
+
+    - name: Uninstall NGINX Ingress Controller
+      ansible.builtin.command:
+        cmd: helm uninstall ingress-nginx -n ingress-nginx
+      failed_when: false
+
+    - name: Delete ArgoCD namespace (releases its LoadBalancer)
+      ansible.builtin.command:
+        cmd: kubectl delete namespace argocd --wait=false
+      failed_when: false
+
+    - name: Wait until all Kubernetes Load Balancers are released
+      ansible.builtin.shell: |
+        for i in $(seq 1 60); do
+          NLB=$(aws elbv2 describe-load-balancers --query "length(LoadBalancers[?starts_with(LoadBalancerName,'k8s-')])" --output text)
+          ELB=$(aws elb describe-load-balancers --query "length(LoadBalancerDescriptions[?starts_with(LoadBalancerName,'k8s-')])" --output text)
+          if [ "$NLB" = "0" ] && [ "$ELB" = "0" ]; then exit 0; fi
+          echo "waiting for LBs... ($i)"; sleep 10
+        done
+        exit 1
+      changed_when: false
