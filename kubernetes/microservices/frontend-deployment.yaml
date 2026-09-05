@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: 571973773340.dkr.ecr.us-east-1.amazonaws.com/ivolve-frontend:4
+        image: 571973773340.dkr.ecr.us-east-1.amazonaws.com/ivolve-frontend:2
         ports:
         - containerPort: 3000
         envFrom:
