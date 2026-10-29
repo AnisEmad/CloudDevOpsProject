@@ -1,10 +1,10 @@
 ############################
 # Jenkins EC2 Instance (Private Subnet)
 ############################
-resource "aws_key_pair" "jenkins" {
-  key_name   = "${var.project_name}-jenkins-key"
-  public_key = file("~/.ssh/jenkins-key.pem.pub")
-}
+# resource "aws_key_pair" "jenkins" {
+#   key_name   = "${var.project_name}-jenkins-key"
+#   public_key = file("~/.ssh/jenkins-key.pem.pub")
+# }
 resource "aws_instance" "jenkins" {
   ami                     = var.ami_id
   instance_type           = var.instance_type
