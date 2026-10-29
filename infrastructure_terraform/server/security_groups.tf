@@ -1,23 +1,4 @@
-############################
-# ALB Security Group (Public Facing)
-############################
-resource "aws_security_group" "alb_sg" {
-  name        = "${var.project_name}-alb-sg"
-  description = "Allow inbound HTTP/HTTPS traffic to ALB"
-  vpc_id      = var.vpc_id
 
-  ingress {
-    description = "Allow HTTP from anywhere"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "${var.project_name}-alb-sg"
-  }
-}
 
 ############################
 # Jenkins EC2 Security Group (Private Subnet)
