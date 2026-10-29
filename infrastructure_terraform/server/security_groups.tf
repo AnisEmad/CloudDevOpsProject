@@ -23,11 +23,3 @@ resource "aws_security_group" "jenkins_sg" {
   }
 }
 
-resource "aws_security_group_rule" "alb_to_jenkins_egress" {
-  type                     = "egress"
-  from_port                = 8080
-  to_port                  = 8080
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.alb_sg.id
-  source_security_group_id = aws_security_group.jenkins_sg.id
-}
