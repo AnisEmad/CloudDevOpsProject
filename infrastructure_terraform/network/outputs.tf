@@ -18,9 +18,9 @@ output "private_subnet_ids" {
   value       = aws_subnet.private[*].id
 }
 
-output "nat_gateway_id" {
+output "nat_gateway_ids" {
   description = "ID of the NAT Gateway"
-  value       = aws_nat_gateway.this.id
+  value       = aws_nat_gateway.this[*].id
 }
 
 output "internet_gateway_id" {
