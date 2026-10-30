@@ -124,32 +124,6 @@ resource "aws_route_table_association" "private" {
 ############################
 # Network ACLs
 ############################
-resource "aws_network_acl" "public" {
-  vpc_id     = aws_vpc.this.id
-  subnet_ids = aws_subnet.public[*].id
-
-  ingress {
-    rule_no    = 100
-    protocol   = "-1"
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
-  }
-
-  egress {
-    rule_no    = 100
-    protocol   = "-1"
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
-  }
-
-  tags = {
-    Name = "${var.project_name}-public-nacl"
-  }
-}
 
 resource "aws_network_acl" "private" {
   vpc_id     = aws_vpc.this.id
